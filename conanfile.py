@@ -7,23 +7,18 @@ class TraactPackage(ConanFile):
     python_requires = "traact_run_env/1.0.0@traact/latest"
     python_requires_extend = "traact_run_env.TraactPackageCmake"
 
-    name = "your_component_name"
-    description = "..."
-    url = ""
-    license = ""
-    author = ""
+    name = "traact_component_http"
+    description = "Simple HTTP sink(get)/source(post) components for traact using cereal"
+    url = "https://github.com/FriederPankratz/traact_component_http.git"
+    license = "MIT"
+    author = "Frieder Pankratz"
 
     settings = "os", "compiler", "build_type", "arch"
     compiler = "cppstd"
-
-    def _options(self):
-        self.options["with_bodytracking"] = [True, False]
-        self.default_options["with_bodytracking"] = True
 
     exports_sources = "src/*", "CMakeLists.txt"
 
     def requirements(self):
         # add your dependencies
-        self.traact_requires("traact_vision", "latest")
-        if self.options.with_tests:
-            self.requires("gtest/[>=1.11.0]")
+        self.traact_requires("traact_component_cereal", "latest")
+        self.requires("cpp-httplib/0.10.8")

@@ -13,7 +13,7 @@ project(${CONAN_PACKAGE_NAME}_PROJECT VERSION ${CONAN_PACKAGE_VERSION})
 include(traact_default_library_setup)
 
 # add your source files here
-set(COMPONENT_SRC )
+set(COMPONENT_SRC src/traact/component/HttpModule.cpp src/traact/component/HttpModule.h src/traact/component/HttpModuleComponent.cpp src/traact/component/HttpModuleComponent.h src/traact/component/HttpSink.cpp)
 
 
 add_library(${CONAN_PACKAGE_NAME} SHARED ${COMPONENT_SRC})
