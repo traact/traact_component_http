@@ -9,7 +9,7 @@ class TraactPackage(ConanFile):
 
     name = "traact_component_http"
     description = "Simple HTTP sink(get)/source(post) components for traact using cereal"
-    url = "https://github.com/FriederPankratz/traact_component_http.git"
+    url = "https://github.com/traact/traact_component_http.git"
     license = "MIT"
     author = "Frieder Pankratz"
 
