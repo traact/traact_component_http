@@ -1,13 +1,14 @@
 # /usr/bin/python3
 import os
-from conans import ConanFile, CMake, tools
-
+from conan import ConanFile
+from conan.tools.build import can_run
 
 class TraactPackage(ConanFile):
-    python_requires = "traact_run_env/1.0.0@traact/latest"
-    python_requires_extend = "traact_run_env.TraactPackageCmake"
+    python_requires = "traact_base/0.0.0@traact/latest"
+    python_requires_extend = "traact_base.TraactPackageCmake"
 
     name = "traact_component_http"
+    version = "0.0.0"
     description = "Simple HTTP sink(get)/source(post) components for traact using cereal"
     url = "https://github.com/traact/traact_component_http.git"
     license = "MIT"
@@ -19,6 +20,10 @@ class TraactPackage(ConanFile):
     exports_sources = "src/*", "CMakeLists.txt"
 
     def requirements(self):
-        # add your dependencies
-        self.traact_requires("traact_component_cereal", "latest")
-        self.requires("cpp-httplib/0.10.8")
+        self.requires("traact_spatial/0.0.0@traact/latest")
+        self.requires("traact_vision/0.0.0@traact/latest")
+        self.requires("traact_component_cereal/0.0.0@traact/latest")
+        self.requires("cpp-httplib/0.14.0", transitive_libs=True)
+
+    def _after_package_info(self):
+        self.cpp_info.libs = ["traact_component_http"]

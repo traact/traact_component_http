@@ -1,14 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
-if (EXISTS ${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
-    include(${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
-else ()
-    message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
-endif ()
+set(TARGET_NAME traact_component_http)
 
-list(APPEND CMAKE_MODULE_PATH ${CONAN_TRAACT_RUN_ENV_ROOT}/cmake)
+project(${TARGET_NAME} VERSION "0.0.0" LANGUAGES CXX)
 
-project(${CONAN_PACKAGE_NAME}_PROJECT VERSION ${CONAN_PACKAGE_VERSION})
+find_package(traact_base)
+list(APPEND CMAKE_MODULE_PATH ${traact_base_INCLUDE_DIR})
 
 include(traact_default_library_setup)
 
@@ -16,6 +13,13 @@ include(traact_default_library_setup)
 set(COMPONENT_SRC src/traact/component/HttpModule.cpp src/traact/component/HttpModule.h src/traact/component/HttpModuleComponent.cpp src/traact/component/HttpModuleComponent.h src/traact/component/HttpSink.cpp)
 
 
-add_library(${CONAN_PACKAGE_NAME} SHARED ${COMPONENT_SRC})
+add_library(${TARGET_NAME} SHARED ${COMPONENT_SRC})
 
-conan_target_link_libraries(${CONAN_PACKAGE_NAME})
+find_package(traact_spatial REQUIRED)
+find_package(traact_vision REQUIRED)
+find_package(traact_component_cereal REQUIRED)
+find_package(httplib REQUIRED)
+
+target_link_libraries(${TARGET_NAME} traact_core::traact_core traact_spatial::traact_spatial traact_vision::traact_vision traact_component_cereal::traact_component_cereal httplib::httplib)
+
+include(traact_default_library_final)
