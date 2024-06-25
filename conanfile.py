@@ -23,7 +23,7 @@ class TraactPackage(ConanFile):
         self.requires("traact_spatial/0.0.0@traact/latest")
         self.requires("traact_vision/0.0.0@traact/latest")
         self.requires("traact_component_cereal/0.0.0@traact/latest")
-        self.requires("cpp-httplib/0.14.0", transitive_libs=True)
+        self.requires("cpp-httplib/0.14.0", run=True)
 
     def _after_package_info(self):
         self.cpp_info.libs = ["traact_component_http"]
